@@ -16,11 +16,11 @@ class AccountAdapter(
     private val viewModel: AccountViewModel,
 ) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
-    inner class AccountViewHolder(view: View):RecyclerView.ViewHolder(view) {
-        val name:TextView=view.findViewById(R.id.txtAccountName)
-        val alternateName:EditText=view.findViewById(R.id.txtAlternateName)
-        val saveButton:Button=view.findViewById(R.id.btnSave)
-        val deleteButton:Button=view.findViewById(R.id.btnDelete)
+    inner class AccountViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val name: TextView = view.findViewById(R.id.txtAccountName)
+        val alternateName: EditText = view.findViewById(R.id.txtAlternateName)
+        val saveButton: Button = view.findViewById(R.id.btnSave)
+        val deleteButton: Button = view.findViewById(R.id.btnDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
@@ -29,13 +29,13 @@ class AccountAdapter(
     }
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
-        val account=accounts[position]
-        holder.name.text=account.accountName
-        holder.alternateName.setText(account.alternateName?:"")
-        holder.saveButton.setOnClickListener{
-            val updateAlternateName=holder.alternateName.text.toString()
-            if(updateAlternateName.isNotEmpty()) {
-                val updateAccount=account.copy(alternateName=updateAlternateName)
+        val account = accounts[position]
+        holder.name.text = account.accountName
+        holder.alternateName.setText(account.alternateName ?: "")
+        holder.saveButton.setOnClickListener {
+            val updateAlternateName = holder.alternateName.text.toString()
+            if (updateAlternateName.isNotEmpty()) {
+                val updateAccount = account.copy(alternateName = updateAlternateName)
                 viewModel.updateAccount(updateAccount)
             }
         }
@@ -48,9 +48,8 @@ class AccountAdapter(
     override fun getItemCount() = accounts.size
 
 
-
-    fun updateAccounts(newAccounts:List<Account>) {
-        this.accounts=newAccounts
+    fun updateAccounts(newAccounts: List<Account>) {
+        this.accounts = newAccounts
         notifyDataSetChanged()
     }
 

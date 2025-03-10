@@ -9,13 +9,14 @@ import com.example.pdfviewer.repository.AccountRepository
 import kotlinx.coroutines.launch
 
 class AccountViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository:AccountRepository
-    val accounts:LiveData<List<Account>>
-init{
-    val accountDao=AccountDatabase.getDatabase(application).accountDao()
-    repository=AccountRepository(accountDao,RetrofitInstance.api)
-    accounts=repository.allAccounts
-}
+    private val repository: AccountRepository
+    val accounts: LiveData<List<Account>>
+
+    init {
+        val accountDao = AccountDatabase.getDatabase(application).accountDao()
+        repository = AccountRepository(accountDao, RetrofitInstance.api)
+        accounts = repository.allAccounts
+    }
 
 
     fun fetchAccounts() {

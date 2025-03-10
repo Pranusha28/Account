@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var adapter: AccountAdapter
     private lateinit var recyclerView: RecyclerView
-    private var currentEditText: EditText?=null
-    private val REQUEST_SPEECH=100
+    private var currentEditText: EditText? = null
+    private val REQUEST_SPEECH = 100
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
 
-        adapter = AccountAdapter(emptyList(),accountViewModel,)
+        adapter = AccountAdapter(emptyList(), accountViewModel)
         recyclerView.adapter = adapter
 
         accountViewModel.accounts.observe(this) { accounts ->
@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode== RESULT_OK && requestCode== REQUEST_SPEECH) {
-            val result=data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            if(!result.isNullOrEmpty()){
+        if (resultCode == RESULT_OK && requestCode == REQUEST_SPEECH) {
+            val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (!result.isNullOrEmpty()) {
                 currentEditText?.setText(result[0])
             }
         }
@@ -77,13 +77,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun startSpeechRecognition() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speak alternate name")
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak alternate name")
 
         try {
-            startActivityForResult(intent,REQUEST_SPEECH)
-        }catch (e:ActivityNotFoundException){
-            Toast.makeText(this,"Speach to text not supported",Toast.LENGTH_SHORT).show()
+            startActivityForResult(intent, REQUEST_SPEECH)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, "Speach to text not supported", Toast.LENGTH_SHORT).show()
         }
     }
 }
